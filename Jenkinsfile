@@ -19,8 +19,7 @@ node {
           projectName: 'ncbrown1/solution-lab00/master',
           filter: 'hello_output.out']); 
     sh 'ls'
-    sh 'which diff'
-    //sh 'diff hello_output_local.out hello_output.out > hello.diff'
+    sh 'diff hello_output_local.out hello_output.out'
     //archiveArtifacts artifacts: 'hello.diff', fingerprint: true
   }
 }
