@@ -22,6 +22,6 @@ node {
     def ret = sh returnStatus: true, script: 'diff hello_output_local.out hello_output.out > hello.diff'
     sh 'cat hello.diff'
     archiveArtifacts artifacts: 'hello.diff', fingerprint: true
-    return ret
+    if (ret != 0) { sh 'fail' }
   }
 }
