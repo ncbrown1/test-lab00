@@ -1,5 +1,6 @@
 node {
   stage('Build') {
+    checkout scm
     sh 'ls'
     sh 'g++ -o hello hello.cpp'
     archiveArtifacts artifacts: 'hello', fingerprint: true
