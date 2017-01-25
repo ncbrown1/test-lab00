@@ -12,12 +12,13 @@ node {
     archiveArtifacts artifacts: 'hello_output.out', fingerprint: true
   }
   stage('Diff') {
-     unstash 'hello_output.out'
-     sh 'mv hello_output.out hello_output_local.out'
-     step ([$class: 'CopyArtifact',
-            projectName: 'ncbrown1/solution-lab00/master',
-            filter: 'hello_output.out']); 
-     sh 'diff hello_output_local.out hello_output.out > hello.diff'
-     archiveArtifacts artifacts: 'hello.diff', fingerprint: true
+    unstash 'hello_output.out'
+    sh 'mv hello_output.out hello_output_local.out'
+    sh 'ls'
+    step ([$class: 'CopyArtifact',
+          projectName: 'ncbrown1/solution-lab00/master',
+          filter: 'hello_output.out']); 
+    sh 'diff hello_output_local.out hello_output.out > hello.diff'
+    archiveArtifacts artifacts: 'hello.diff', fingerprint: true
   }
 }
