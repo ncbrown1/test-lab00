@@ -8,6 +8,16 @@ node {
     unstash 'hello'
     sh './hello > hello_output.out'
     sh 'cat hello_output.out'
+    stash includes: 'hello_output.out', name: 'hello_output.out'
     archiveArtifacts artifacts: 'hello_output.out', fingerprint: true
+  }
+  stage('Diff') {
+     unstash 'hello_output.out'
+     sh 'mv hello_output.out hello_output_local.out'
+     step ([$class: 'CopyArtifact',
+            projectName: 'ncbrown1/solution-lab00/master',
+            filter: 'hello_output.out']); 
+     sh 'diff hello_output_local.out hello_output.out > hello.diff'
+     archiveArtifacts artifacts: 'hello.diff', fingerprint: true
   }
 }
