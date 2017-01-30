@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurperClassic
+@Library('anacapa-jenkins-lib') import static edu.ucsb.cs.anacapa.jenkins.Lib.*
 
 node {
   stage('Build') {
@@ -7,7 +7,7 @@ node {
     stash includes: 'hello', name: 'hello'
   }
   stage('CheckJSON') {
-    def obj = jsonParse(readFile("testables.json"))
+    def obj = parseJSON(readFile("testables.json"))
     println obj
   }
   stage('Run') {
@@ -30,9 +30,4 @@ node {
     archiveArtifacts artifacts: 'hello.diff', fingerprint: true
     if (ret != 0) { sh 'fail' }
   }
-}
-
-@NonCPS
-def jsonParse(def json) {
-    new groovy.json.JsonSlurperClassic().parseText(json)
 }
