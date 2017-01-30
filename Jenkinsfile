@@ -12,24 +12,25 @@ node {
   }
   
   for (int i=0; i< 2; ++i) {  
-    stage "Stage #"+i
-    print 'Hello, world $i!'
-  }
-
-  stage "Stage Parallel"
-  def branches = [:]
-  for (int i = 0; i < 10; i++) {
-    branches["split${i}"] = {
-      stage "Stage parallel- #"+i
-      node('remote') {
-       echo  'Starting sleep'
-       sleep 4
-       echo  'Finished sleep'
-      }
+    stage "Stage #"+i {
+      print 'Hello, world $i!'
     }
   }
-  
-  parallel branches
+
+  stage ("Stage Parallel") {
+    def branches = [:]
+    for (int i = 0; i < 10; i++) {
+      branches["split${i}"] = {
+        stage ("Stage parallel- #"+i) {
+         echo  'Starting sleep'
+         sleep 4
+         echo  'Finished sleep'
+        }
+      }
+    }
+
+    parallel branches
+  }
   
   stage('Run') {
     unstash 'hello'
