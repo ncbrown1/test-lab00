@@ -1,0 +1,16 @@
+{
+  "testables" : [{
+    "build_command" : "g++ -o hello hello.cpp",
+    "executable_files" : ["hello"],
+    "hide_results_from_students" : false,
+    "build_timeout" : 10,
+    "test_cases" : [{
+      "command": "./hello", 
+      "points": 10, 
+      "hide_expected_output": true, 
+      "diff": "stdout", 
+      "execute_timeout": 10
+    }]
+  }]
+}
+
