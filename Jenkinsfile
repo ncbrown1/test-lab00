@@ -10,21 +10,16 @@ node {
     def obj = parseJSON(readFile("testables.json"))
     println obj
   }
-  
-  for (int i=0; i< 2; ++i) {  
-    stage ("Stage #${i}") {
-      print 'Hello, world $i!'
-    }
-  }
 
   stage ("Stage Parallel") {
     def branches = [:]
     for (int i = 0; i < 10; i++) {
       branches["split${i}"] = {
         stage ("Stage parallel- #"+i) {
-         echo  'Starting sleep'
-         sleep 4
-         echo  'Finished sleep'
+          echo  'Starting sleep'
+          sleep 4
+          echo  'Finished sleep'
+          if (i % 2 == 0) { sh 'fail' }
         }
       }
     }
