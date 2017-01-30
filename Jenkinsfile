@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 node {
   stage('Build') {
@@ -7,8 +7,7 @@ node {
     stash includes: 'hello', name: 'hello'
   }
   stage('CheckJSON') {
-    def txt = readFile("testables.json")
-    def obj = JsonSlurper().parseText(txt)
+    def obj = jsonParse(readFile("testables.json"))
     println obj
   }
   stage('Run') {
@@ -31,4 +30,9 @@ node {
     archiveArtifacts artifacts: 'hello.diff', fingerprint: true
     if (ret != 0) { sh 'fail' }
   }
+}
+
+@NonCPS
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
 }
