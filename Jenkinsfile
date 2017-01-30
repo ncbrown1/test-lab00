@@ -15,11 +15,11 @@ node {
     def branches = [:]
     for (int i = 0; i < 10; i++) {
       branches["split${i}"] = {
-        stage ("Stage parallel- #"+i) {
+        stage ("Stage parallel- #${i}") {
           echo  'Starting sleep'
           sleep 4
           echo  'Finished sleep'
-          if (i % 2 == 0) { currentStage.result =  'FAILURE' }
+          if (i % 2 == 0) { stageStatus 'UNSTABLE' }
         }
       }
     }
