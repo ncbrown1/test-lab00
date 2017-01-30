@@ -1,4 +1,4 @@
-@Library('anacapa-jenkins-lib') import static edu.ucsb.cs.anacapa.jenkins.Lib.*
+@Library('anacapa-jenkins-lib') import static edu.ucsb.cs.anacapa.pipeline.Lib.*
 
 node {
   stage('Build') {
