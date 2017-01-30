@@ -1,8 +1,15 @@
+import groovy.json.JsonSlurper
+
 node {
   stage('Build') {
     checkout scm
     sh 'g++ -o hello hello.cpp'
     stash includes: 'hello', name: 'hello'
+  }
+  stage('CheckJSON') {
+    def txt = readFile("testables.json")
+    def obj = JsonSlurper().parseText(txt)
+    println obj
   }
   stage('Run') {
     unstash 'hello'
