@@ -19,7 +19,7 @@ node {
           echo  'Starting sleep'
           sleep 4
           echo  'Finished sleep'
-          if (i % 2 == 0) { sh 'fail' }
+//          if (i % 2 == 0) { sh 'fail' }
         }
       }
     }
