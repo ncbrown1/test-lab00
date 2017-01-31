@@ -1,6 +1,29 @@
 @Library('anacapa-jenkins-lib') import static edu.ucsb.cs.anacapa.pipeline.Lib.*
 
-node {
+pipeline {
+  agent any
+  stages {
+    stage ("Stage Parallel") {
+      def branches = [:]
+      for (int i = 0; i < 10; i++) {
+        branches["split${i}"] = {
+          stage ("Stage parallel- #${i}") {
+            echo  'Starting sleep'
+            sleep 4
+            echo  'Finished sleep'
+            if (i % 2 == 0) { stageStatus 'UNSTABLE' }
+          }
+        }
+      }
+
+      parallel branches
+    }
+  }
+}
+  
+  
+  
+/*node {
   stage('Build') {
     checkout scm
     sh 'g++ -o hello hello.cpp'
@@ -48,3 +71,4 @@ node {
     if (ret != 0) { sh 'fail' }
   }
 }
+*/
